@@ -1,1 +1,5 @@
-sed 's/"ipv6": ".\+/"ipv6": "",/g;s/"id": ".\+/"id": "",/g' ./cf-ddns.conf  -i ;python ./cf-ddns.py
+#!/bin/bash
+dir=$(dirname $(readlink -f $0))
+cd $dir
+#sed 's/"ipv6": ".\+/"ipv6": "",/g;s/"id": ".\+/"id": "",/g' ./cf-ddns.conf  -i ;
+python $dir/cf-ddns.py

@@ -1,3 +1,5 @@
+-> WORK IN PROGRESS , external ipv4 needs rework, v6 needs "scope global detection" or smth ..
+
 # Yet Another Dynamic DNS Client 
 *Dynamic DNS Client for CloudFlare written in Python*
 

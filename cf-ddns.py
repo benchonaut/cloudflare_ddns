@@ -22,7 +22,7 @@ except ImportError:
     from urllib2 import URLError
 
 import json
-
+import netifaces
 
 config_file_name = 'cf-ddns.conf'
 
@@ -47,17 +47,30 @@ public_ipv4 = None
 public_ipv6 = None
 ip_version = None
 
+for interface in netifaces.interfaces():
+	try:	
+		
+		if (netifaces.ifaddresses(interface)[netifaces.AF_INET6][0]['addr']):
+			if not (netifaces.ifaddresses(interface)[netifaces.AF_INET6][0]['addr'].startswith('fe')):
+				if not (netifaces.ifaddresses(interface)[netifaces.AF_INET6][0]['addr'].startswith('::')):
+					public_ipv6 = netifaces.ifaddresses(interface)[netifaces.AF_INET6][0]['addr']
+					#print public_ipv6
+	except:
+		pass
+
+
 try:
     public_ipv4 = urlopen(Request(
         'http://ipv4.icanhazip.com/')).read().rstrip().decode('utf-8')
 except URLError as e:
     print('* no public IPv4 address detected')
 
-try:
-    public_ipv6 = urlopen(Request(
-        'http://ipv6.icanhazip.com/')).read().rstrip().decode('utf-8')
-except URLError as e:
-    print('* no public IPv6 address detected')
+#try:
+#    public_ipv6 = urlopen(Request(
+#        'http://ipv6.icanhazip.com/')).read().rstrip().decode('utf-8')
+#except URLError as e:
+#    print('* no public IPv6 address detected')
+
 
 if public_ipv4 is None and public_ipv4 is None:
     print('* Failed to get any public IP address')
